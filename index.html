@@ -133,6 +133,117 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-注解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/06/%E6%B3%A8%E8%A7%A3/">注解</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/06/%E6%B3%A8%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2021-11-06T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><h3 id="1-注解基础"><a href="#1-注解基础" class="headerlink" title="1.注解基础"></a>1.注解基础</h3><p>从 JDK 1.5 引入<br>位于源码中 (代码 / 注释 / 注解)，使用其他工具进行处理的标签<br>注解用来修饰程序的元素，但不会对被修饰的对象有直接的影响<br>只有通过某种配套的工具才会对注解信息进行访问和处理<br>主要用途<br>1.提供信息给编译器 / IDE 工具<br>2.可用于其他工具来产生额外的代码 / 配置文件等<br>3.有一些注解可在程序运行时访问，增加程序的动态性</p>
+<hr>
+<h4 id="JDK-预定义的普通注解-不完全"><a href="#JDK-预定义的普通注解-不完全" class="headerlink" title="JDK 预定义的普通注解 (不完全)"></a>JDK 预定义的普通注解 (不完全)</h4><p>@Override 表示继承和改写 自带注解<br>@Deprecated 表示废弃 自带注解<br>@SuppressWarnings 表示压制警告 自带注解<br>@SafeVarargs 不会对不定项参数做危险操作 自带注解<br>@FunctionInterface 声明功能性接口 自带注解</p>
+<hr>
+<h4 id="JDK-预定义的元注解-不完全"><a href="#JDK-预定义的元注解-不完全" class="headerlink" title="JDK 预定义的元注解 (不完全)"></a>JDK 预定义的元注解 (不完全)</h4><p>@Target 设置目标范围 元注解<br>@Retention 设置保持性 元注解<br>@Documented 文档 元注解<br>@Inherited 注解继承 元注解<br>@Repeatable 此注解可以重复修饰 元注解</p>
+<hr>
+<h3 id="2-预定义的普通注解"><a href="#2-预定义的普通注解" class="headerlink" title="2. 预定义的普通注解"></a>2. 预定义的普通注解</h3><h4 id="Override"><a href="#Override" class="headerlink" title="@Override"></a>@Override</h4><p>修饰方法，检查该方法是父类的方法<br>强制该函数代码必须符合父类中该方法的定义<br>避免代码错误</p>
+<hr>
+<h4 id="Deprecated"><a href="#Deprecated" class="headerlink" title="@Deprecated"></a>@Deprecated</h4><p>修饰类 / 类的元素 / 包<br>标注为废除，建议程序员不再使用这个类/元素/包</p>
+<hr>
+<h4 id="SuppressWarnings"><a href="#SuppressWarnings" class="headerlink" title="@SuppressWarnings"></a>@SuppressWarnings</h4><p>1.可以修饰变量 / 方法 / 构造函数 / 类等<br>2.压制各种不同类型的警告信息，使得编译器不显示警告<br>3.各种不同类型是叠加，如修饰类的警告类型，和修饰方法的警告类型，对于方法来说，是叠加的<br>4.警告类型名称是编译器 / IDE 工具自己定的，Java 规范没有强制要求哪些名称。编译器厂商需要自行协商，保证同名警告类型在各个编译器上一样工作<br>    @SuppressWarnings<br>    @SuppressWarnings (“unchecked”) 忽略 unchecked 警告信息<br>    @SuppressWarnings (“deprecated”) 忽略过时方法的警告信息<br>    @SuppressWarnings ({“unchecked”，“deprecated”}) 忽略两种警告信息<br>    @ SuppressWarnings (values={“unchecked”，“deprecated”}) 同上<br>    @ SuppressWarnings (“all”) 忽略所有的警告信息<br>5.JLS 只规定了 deprecated 和 unchecked 两种<br>6.其他的警告类型<br>    all，忽略所有的警告<br>    cast，忽略类转型警告<br>    serial，忽略实现 Serializable 接口的，没有定义 serialVersionUID<br>    使用 javac -X 可以看当前的编译器使用哪些警告类型</p>
+<hr>
+<h3 id="3-自定义注解"><a href="#3-自定义注解" class="headerlink" title="3. 自定义注解"></a>3. 自定义注解</h3><p>1.注解定义：扩展 java.lang.annotation.Annotation 注解接口<br>2.注解可以包括的类型<br>    8 种基本类型 (int/short/long/float/double/byte/char/boolean) –String<br>    Class<br>    enum 类型<br>    注解类型<br>    由前面类型组成的数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public @interface BugReport &#123;</span><br><span class="line">	enum Status &#123;UNCONFIRMED, CONFIRMED, FIXED, NOTABUG&#125;;</span><br><span class="line">	boolean showStopper() default true;</span><br><span class="line">	String assiganedTo() default &quot;[none]&quot;;</span><br><span class="line">	Status status() default Status.UNCONFIRMED;</span><br><span class="line">	String[] reportedBy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="注解使用"><a href="#注解使用" class="headerlink" title="注解使用"></a>注解使用</h2><p>@Test</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public @interface Test &#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@SingleTest<br>@SingleTest(5)<br>@SingleTest(value=5)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public @interface SingleTest &#123;</span><br><span class="line">	int value() default 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@MultipleTest<br>@MultipleTest(a=1)<br>@MultipleTest(a=1,b=2)<br>@MultipleTest(b=2,a=1)<br>** @MultipleTest (1,2) 是错误写法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public @interface MultipleTest &#123;</span><br><span class="line">	int a() default 0;</span><br><span class="line">	int b() default 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="注解使用的位置"><a href="#注解使用的位置" class="headerlink" title="注解使用的位置"></a>注解使用的位置</h2><p>@Target 可以限定位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">// 表示该注解会保留在 class 文件中</span><br><span class="line">@Target(ElementType.METHOD)   </span><br><span class="line">// 表示该注解只能用于方法</span><br></pre></td></tr></table></figure>
+
+<p>允许的位置<br>1.包<br>2.类<br>3.接口<br>4.方法<br>5.构造器<br>6.成员变量<br>7.局部变量/形参变量/类型参数</p>
+<hr>
+<h2 id="注解作为单元测试"><a href="#注解作为单元测试" class="headerlink" title="注解作为单元测试"></a>注解作为单元测试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class Foo &#123;</span><br><span class="line">	@SingleTest(1)</span><br><span class="line">	public static void m1(int a) &#123;</span><br><span class="line">		if(a&lt;0)</span><br><span class="line">		&#123;</span><br><span class="line">			throw new RuntimeException(&quot;Crash&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void m2() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@SingleTest(value=-2)</span><br><span class="line">	public static void m3(int a) &#123;</span><br><span class="line">		if(a&lt;0)</span><br><span class="line">		&#123;</span><br><span class="line">			throw new RuntimeException(&quot;Crash&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	int passed = 0, failed = 0;</span><br><span class="line">	String className = &quot;annotations.single.Foo&quot;;</span><br><span class="line">	for (Method m : Class.forName(className).getMethods()) &#123;</span><br><span class="line"></span><br><span class="line">		if (m.isAnnotationPresent(SingleTest.class)) &#123;</span><br><span class="line">			System.out.println(m.getName());</span><br><span class="line">			SingleTest st = m.getAnnotation(SingleTest.class);				</span><br><span class="line">			try &#123;</span><br><span class="line">				m.invoke(null,st.value());</span><br><span class="line">				passed++;</span><br><span class="line">			&#125; catch (Throwable ex) &#123;</span><br><span class="line">				System.out.printf(&quot;Test %s failed: %s %n&quot;, m, ex.getCause());</span><br><span class="line">				failed++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.printf(&quot;Passed: %d, Failed %d%n&quot;, passed, failed);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="4-预定义的元注解"><a href="#4-预定义的元注解" class="headerlink" title="4. 预定义的元注解"></a>4. 预定义的元注解</h3><h4 id="Retention"><a href="#Retention" class="headerlink" title="Retention"></a>Retention</h4><p>示例 @Retention (RetentionPolicy.RUNTIME)<br>这个注解用来修饰其他注解的存在范围<br>RetentionPolicy.SOURCE 注解仅存在源码，不在 class 文件<br>RetentionPolicy.CLASS 默认的注解保留策略 注解存在于.class 文件，但是不能被 JVM 加载<br>RetentionPolicy.RUNTIME 这种策略下，注解可以被 JVM 运行时访问到。通常情况下，可以结合反射来做一些事情</p>
+<hr>
+<h4 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h4><p>限定目标注解作用于什么位置 @Target ({ElementType.METHOD})<br>ElementType.ANNOTATION_TYPE（注：修饰注解）<br>ElementType.CONSTRUCTOR<br>ElementType.FIELD<br>ElementType.LOCAL_VARIABLE<br>ElementType.METHOD<br>ElementType.PACKAGE<br>ElementType.PARAMETER<br>ElementType.TYPE（注：任何类型，即上面的的类型都可以修饰）</p>
+<hr>
+<h4 id="Inherited"><a href="#Inherited" class="headerlink" title="Inherited"></a>Inherited</h4><p>让一个类和它的子类都包含某个注解<br>普通的注解没有继承功能</p>
+<hr>
+<h4 id="Repeatable"><a href="#Repeatable" class="headerlink" title="Repeatable"></a>Repeatable</h4><p>自 JDK1.8 引入<br>表示被修饰的注解可以重复应用标注<br>需要定义注解和容器注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 普通注解</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Repeatable(RepeatableAnnotations.class)</span><br><span class="line">public @interface RepeatableAnnotation &#123;</span><br><span class="line">	</span><br><span class="line">	int a() default 0;</span><br><span class="line">	int b() default 0;</span><br><span class="line">	int c() default 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 容器注解</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface RepeatableAnnotations &#123;</span><br><span class="line">	RepeatableAnnotation[] value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="Documented"><a href="#Documented" class="headerlink" title="Documented"></a>Documented</h4><h2 id="指明这个注解可以被-Javadoc-工具解析，形成帮助文档"><a href="#指明这个注解可以被-Javadoc-工具解析，形成帮助文档" class="headerlink" title="指明这个注解可以被 Javadoc 工具解析，形成帮助文档"></a>指明这个注解可以被 Javadoc 工具解析，形成帮助文档</h2><h3 id="5-注解的解析"><a href="#5-注解的解析" class="headerlink" title="5.注解的解析"></a>5.注解的解析</h3><h4 id="RetentionPolicy-RUNTIME"><a href="#RetentionPolicy-RUNTIME" class="headerlink" title="RetentionPolicy.RUNTIME"></a>RetentionPolicy.RUNTIME</h4><p>注解在 class 文件中，被 JVM 加载，可用反射解析注解<br>1.Class.getAnnotations()<br>2.Class.isAnnotation()<br>3.Class. .isAnnotationPresent(Class annotationClass)<br>4.Method.getAnnotations()<br>5.Method.isAnnotationPresent(Class annotationClass)<br>6.Field.getAnnotations()<br>7.Field.isAnnotationPresent(Class annotationClass)<br>8.Constructor.getAnnotations()<br>9.Constructor.isAnnotationPresent(Class annotationClass)</p>
+<h4 id="RetentionPolicy-CLASS"><a href="#RetentionPolicy-CLASS" class="headerlink" title="RetentionPolicy.CLASS"></a>RetentionPolicy.CLASS</h4><p>注解在 class 文件中，但 JVM 没有加载<br>只能采用字节码工具进行特殊处理<br>如 ASM 工具，<a target="_blank" rel="noopener" href="https://asm.ow2.io/">https://asm.ow2.io/</a></p>
+<hr>
+<h4 id="RetentionPolicy-SOURCE"><a href="#RetentionPolicy-SOURCE" class="headerlink" title="RetentionPolicy.SOURCE"></a>RetentionPolicy.SOURCE</h4><p>注解在 java 文件中，不在 class 文件中，也不会被 JVM 加载<br>只有在源码级别进行注解处理<br>Java 提供注解处理器来解析带注解的源码，产生新的文件<br>注解处理器继承 AbstractProcessor，重写 process 方法<br>javac –processor Processor1, Processor2, … sourceJavaFile<br>编译器定位源文件的注解，然后依次启动注解处理器执行处理。如果某个注解处理器产生新的源文件，那么将重复执行这个处理过程。<br>注解处理器只能产生新文件，不会修改已有的源文件</p>
+<hr>
+<h4 id="Java-5-6-提供的-APT-工具"><a href="#Java-5-6-提供的-APT-工具" class="headerlink" title="Java 5/6 提供的 APT 工具"></a>Java 5/6 提供的 APT 工具</h4><p>一个可以处理注解的命令行工具<br>    <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/6/docs/technotes/guides/apt/">https://docs.oracle.com/javase/6/docs/technotes/guides/apt/</a><br>包含在 com.sun.mirror 包中<br>于 Java 7 被标记为 Deprecated，计划于将来版本中废除</p>
+<hr>
+<h3 id="6-RUNTIME-注解的实现本质"><a href="#6-RUNTIME-注解的实现本质" class="headerlink" title="6.RUNTIME 注解的实现本质"></a>6.RUNTIME 注解的实现本质</h3><p>注解采用接口中的方法来表示变量<br>Java 为注解产生一个代理类。这个代理类包括一个 AnnotationInvocationHandler 成员变量<br>AnnotationInvocationHandler 有一个 Map 的成员变量，用来存储所有的注解的属性赋值<br>在程序中，调用注解接口的方法，将会被代理类接管，然后根据方法名字，到 Map 里面拿相应的 Value 并返回<br>传统的接口中的变量，都是 public final static<br>注解需要随意赋值<br>    注解方法表示变量<br>    采用代理类拦截注解方法访问<br>    所有的注解的赋值，都放在 Map 中，访问速度快</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/06/%E6%B3%A8%E8%A7%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-让Excel表格填充色根据内容动态高亮" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
