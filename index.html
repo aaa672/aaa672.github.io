@@ -133,27 +133,47 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-技术相关01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Java创建线程的方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/22/%E6%8A%80%E6%9C%AF%E7%9B%B8%E5%85%B301/">技术相关01</a>
+      <a class="article-title" href="/2021/10/09/Java%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/">Java创建线程的方式</a>
     </h1>
   
 
         
-        <a href="/2021/11/22/%E6%8A%80%E6%9C%AF%E7%9B%B8%E5%85%B301/" class="archive-article-date">
-  	<time datetime="2021-11-22T15:48:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-22</time>
+        <a href="/2021/10/09/Java%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2021-10-09T13:48:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="创建和运行线程"><a href="#创建和运行线程" class="headerlink" title="创建和运行线程"></a>创建和运行线程</h2><h3 id="方法一，直接使用-Thread"><a href="#方法一，直接使用-Thread" class="headerlink" title="方法一，直接使用 Thread"></a>方法一，直接使用 Thread</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.test;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Slf4j(topic = &quot;c.Test1&quot;)</span><br><span class="line">public class Test1  &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        //创建线程,使用匿名内部类</span><br><span class="line">        //这里是多态，创建的new Thread() 是子类</span><br><span class="line">        Thread t = new Thread()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                log.debug(&quot;running&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        //定义名字</span><br><span class="line">        t.setName(&quot;NAME&quot;);</span><br><span class="line">        //启动线程</span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        //main方法主线程</span><br><span class="line">        log.debug(&quot;main running&quot;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法二，使用-Runnable-配合-Thread（推荐）"><a href="#方法二，使用-Runnable-配合-Thread（推荐）" class="headerlink" title="方法二，使用 Runnable 配合 Thread（推荐）"></a>方法二，使用 Runnable 配合 Thread（推荐）</h3><p>把【线程】和【任务】（要执行的代码）分开，Thread 代表线程，Runnable 可运行的任务（线程要执行的代码）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.test;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">@Slf4j(topic = &quot;c.Test2&quot;)</span><br><span class="line">public class Test2 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">       </span><br><span class="line">        Runnable r = new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                log.debug(&quot;任务对象线程&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        //创建线程</span><br><span class="line">        Thread t = new Thread(r,&quot;不系之舟&quot;);</span><br><span class="line">        t.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>lambda表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.test;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Slf4j(topic = &quot;c.Test2&quot;)</span><br><span class="line">public class Test2 &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        // 使用 lambda 表达式，因为 Runnable 接口</span><br><span class="line">        // 标注了 @FunctionalInterface 这个注解，表示是一个函数式接口，可以使用 lambda 表达式</span><br><span class="line">        Runnable r = () -&gt; log.debug(&quot;任务对象线程&quot;);</span><br><span class="line"></span><br><span class="line">        //创建线程</span><br><span class="line">        Thread t = new Thread(r,&quot;nThread&quot;);</span><br><span class="line">        t.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法三，FutureTask-配合-Thread"><a href="#方法三，FutureTask-配合-Thread" class="headerlink" title="方法三，FutureTask 配合 Thread"></a>方法三，FutureTask 配合 Thread</h3><p>​ FutureTask 能够接收 Callable 类型的参数，用来处理有返回结果的情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package cn.itcast.test;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Callable;</span><br><span class="line">import java.util.concurrent.ExecutionException;</span><br><span class="line">import java.util.concurrent.FutureTask;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Slf4j(topic = &quot;c.Test3&quot;)</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) throws ExecutionException, InterruptedException &#123;</span><br><span class="line"></span><br><span class="line">        //创建任务对象</span><br><span class="line">        FutureTask&lt;Integer&gt; task = new FutureTask&lt;&gt;(new Callable&lt;Integer&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Integer call() throws Exception &#123;</span><br><span class="line">                log.debug(&quot;任务对象执行&quot;);</span><br><span class="line">                Thread.sleep(3000);</span><br><span class="line">                return 1000;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread t = new Thread(task);</span><br><span class="line">        t.start();</span><br><span class="line"></span><br><span class="line">        //  task.get() 等任务对象返回结果后打印返回值，在主线程中执行的</span><br><span class="line">        log.debug(&quot;&#123;&#125;&quot;,task.get()); // ”&#123;&#125;“ 表示占位符</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法一：-子类继承Thread，直接使用Thread"><a href="#方法一：-子类继承Thread，直接使用Thread" class="headerlink" title="方法一： 子类继承Thread，直接使用Thread"></a>方法一： 子类继承Thread，直接使用Thread</h4><p>Thread t = new Thread(); 这是多态，创建了子类对象。</p>
+<p>创建了Thread的子类对象，在子类对象中重写了 Thread中的run() 方法，最终还是执行了 子类的 run() 方法</p>
+<h4 id="方法二-原理之-Thread-与-Runnable-的关系"><a href="#方法二-原理之-Thread-与-Runnable-的关系" class="headerlink" title="方法二 原理之 Thread 与 Runnable 的关系"></a>方法二 原理之 Thread 与 Runnable 的关系</h4><p>Thread中有一个 init() 方法，在方法中把 Runnable对象赋值给了 Thread 的成员变量 target</p>
+<p>这个Runnbale是在 Thread中 run() 方法中用到的，在方法中判断这个 Runnable不为空，然后调用这个Runnable的 run() 方法</p>
+<p>实际上调用的还是Thread的 run() 方法</p>
+<p>在 Thread 中如果发现有 Runnable 对象，就会优先采用 Runnable对象的 run() 方法</p>
+<p>小结：</p>
+<p>方法1 是把线程和任务合并在了一起，方法2 是把线程和任务分开了<br>用 Runnable 更容易与线程池等高级 API 配合<br>用 Runnable 让任务类脱离了 Thread 继承体系，更灵活<br>方法三，FutureTask 配合 Thread</p>
+<p>FutureTask 实现了 RunnableFuture 接口，这个接口继承了 Runnable，所以说FutrueTak间接实现了Runnable接口<br>FutureTask 需要配合callable接口来实现任务，callable可以抛出异常<br>因为FutureTask也实现了Runnable接口，所以可以传入 Thread的构造方法</p>
+
       
 
       
@@ -165,7 +185,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/22/%E6%8A%80%E6%9C%AF%E7%9B%B8%E5%85%B301/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/10/09/Java%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -195,27 +215,32 @@
 
 
   
-    <article id="post-新博客01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Excel单元格内容变更后填充色变更" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/22/%E6%96%B0%E5%8D%9A%E5%AE%A201/">新博客01</a>
+      <a class="article-title" href="/2021/09/29/Excel%E5%8D%95%E5%85%83%E6%A0%BC%E5%86%85%E5%AE%B9%E5%8F%98%E6%9B%B4%E5%90%8E%E5%A1%AB%E5%85%85%E8%89%B2%E5%8F%98%E6%9B%B4/">Excel单元格内容变更后填充色变更</a>
     </h1>
   
 
         
-        <a href="/2021/11/22/%E6%96%B0%E5%8D%9A%E5%AE%A201/" class="archive-article-date">
-  	<time datetime="2021-11-22T15:48:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-22</time>
+        <a href="/2021/09/29/Excel%E5%8D%95%E5%85%83%E6%A0%BC%E5%86%85%E5%AE%B9%E5%8F%98%E6%9B%B4%E5%90%8E%E5%A1%AB%E5%85%85%E8%89%B2%E5%8F%98%E6%9B%B4/" class="archive-article-date">
+  	<time datetime="2021-09-29T12:32:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Excel单元格内容变更后填充色变更"><a href="#Excel单元格内容变更后填充色变更" class="headerlink" title="Excel单元格内容变更后填充色变更"></a>Excel单元格内容变更后填充色变更</h2><p>1.建立操作表格的复制表。</p>
+<p>2.选中目标范围，点击条件格式-&gt;新建规则。</p>
+<p>3.使用公式，选定目标范围后连按三次F4，输入”&lt;&gt;”后选中复制表中的目标内容，再次按三次F4。</p>
+<p>4.选择填充色。</p>
+<p>这样，原表内容修改后背景色就会更改了。</p>
+
       
 
       
@@ -227,7 +252,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/22/%E6%96%B0%E5%8D%9A%E5%AE%A201/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/09/29/Excel%E5%8D%95%E5%85%83%E6%A0%BC%E5%86%85%E5%AE%B9%E5%8F%98%E6%9B%B4%E5%90%8E%E5%A1%AB%E5%85%85%E8%89%B2%E5%8F%98%E6%9B%B4/">展开全文 >></a>
         </p>
       
 
@@ -257,27 +282,123 @@
 
 
   
-    <article id="post-为博客添加额外功能" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Object对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/02/%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E5%8A%9F%E8%83%BD/">为博客添加额外功能</a>
+      <a class="article-title" href="/2021/09/12/Object%E5%AF%B9%E8%B1%A1/">Object对象</a>
     </h1>
   
 
         
-        <a href="/2021/11/02/%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E5%8A%9F%E8%83%BD/" class="archive-article-date">
-  	<time datetime="2021-11-02T11:26:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-02</time>
+        <a href="/2021/09/12/Object%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
+  	<time datetime="2021-09-12T12:48:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>0bject实例函数与静态函数<br>Object实例函数<br>实例对象.hasOwnPropety(属性名)</p>
+<p>用于判断对象自身是否具有指定名称的实例属性【不会检查实例对象的原型链】</p>
+<p>true:表示查到相应的属性<br>false:表示没有查到属性<br>实例对象.propertylsEnumerable(属性名)</p>
+<p>用于判断指定名称的属性是否为实例属性且是否是可枚举的属性</p>
+<p>true:表示该属性为实例属性可枚举<br>false:表示该属性不是实例属性/不可枚举<br>Object静态函数<br>Object.create(原型可为空,属性描述)函数【创建对象,无中生有】</p>
+<p>创建并返回一个指定原型和指定属性的对象</p>
+<p>参考说明</p>
+<p>参数1：对象的原型,可以为空,原型是undefine</p>
+<p>参数2：属性描述符</p>
+<p>value:属性值</p>
+<p>writable属性是否可写入</p>
+<p>true:可改<br>false:只读,默认<br>enumerable:属性是否可枚举【循环是否可单独获取】</p>
+<p>true:可<br>falese:不可,默认<br>configurable:属性是否可配置</p>
+<p>true:可以修改属性的特性以及删除属性<br>false:不可配置【默认】<br>Object.defineProperties(对象变量,属性描述)函数</p>
+<p>作用是添加或修改对象的属性值</p>
+<p>参考说明</p>
+<p>参数1：对象变量</p>
+<p>参数2：属性描述符</p>
+<p>value:属性值</p>
+<p>writable属性是否可写入</p>
+<p>true:可改<br>false:只读,默认<br>enumerable:属性是否可枚举【循环是否可单独获取】</p>
+<p>true:可<br>falese:不可,默认<br>configurable:属性是否可配置</p>
+<p>true:可以修改属性的特性以及删除属性<br>false:不可配置【默认】<br>Object.getOwnPropertyName(实例对象)</p>
+<p>用于获取对象的所有实例属性和函数,不包含原型链的继承属性和方法,格式为数组<br>Obejct.keys()函数</p>
+<p>用于获取对象可枚举的实例属性,不包含原型链的继承属性,格式为数组<br>Array常见处理场景<br>filter()函数<br>过滤满足条件的数据,返回一个新数组且不会改变原数组的结构</p>
+<p>true:当前元素符合条件,元素会被添加到新数之内<br>false:当前元素不符合条件,保留在原来的数组内<br>判断变量是数组还是对象</p>
+<p>construtor–构造属性</p>
+<p>判断变量的构造函数的类型是数组还是对象<br>instanceo运算符</p>
+<p>用于通过查找原型链来检测某个变量是否为某种数据类型的实例对象</p>
+<p>作用一：【数组/对象/字符串/数字/布尔值/空值/未定义/某个实例是属于某个某个函数】<br>作用二：判断实例对象是否属于某个构造函数的实例【实例对象的归属】<br>语法格式：变量instanceof类型</p>
+<p>true:表示当前变量是某种类型<br>false:表示当前变量不是该类型<br>toString()函数</p>
+<p>是Object类型本身自带的函数,可以判断变量是数组还是对象–借助call()函数</p>
+<p>借助call()调用Object原型上的toString函数,将主体设置为需要传入的变量,通过返回值判断类型</p>
+<p>call()<br>apply()<br>语法格式：Object.prototype.toString.call(变量)</p>
+<p>返回值：[object类型]<br>Array(变量)静态函数</p>
+<p>判断变量是否是数组</p>
+<p>true:是数组<br>false:不是数组<br>reduce()函数累加器</p>
+<p>作用就是累加处理数据【将一个函数作为累加器,将数组中每个元素从左到右一次执行累加】</p>
+<p>语法结构：数组 reduce(callback(){}[,intialValue])</p>
+<p>initalValue参数</p>
+<p>作为callback函数的第一个参数值<br>callback(参数集){}</p>
+<p>accumlator【参数名可改】</p>
+<p>currentValue参数</p>
+<p>上一个调用累加器的返回值</p>
+<p>第一类初始值 = initalValue</p>
+<p>第二类初始值：=数组的第一个元素</p>
+<p>arr.reduce(funtion(acc){acc=arr[0]})</p>
+<p>当数组正在循环的元素值类似于循环内arr[i]</p>
+<p>currentIndex参数</p>
+<p>当前数组正在循环的元素下标</p>
+<p>如果initalValue设置了,，下标参数从0开始<br>如果没有设置,下标从1开始【数组的第一个元素会赋值给acc】<br>array参数</p>
+<p>数组本身<br>求数组的最大值和最小值</p>
+<p>方法1：通过原型属性拓展性min()和max函数</p>
+<p>通过在原型上自定义min()和max()【原生的方式】<br>方法2：通过ES6拓展符使用Math对象的min和max</p>
+<p>方法3：通过apply()函数借助Math对象的min和max使用</p>
+<p>Array对象和Math对象是分别两个独立原型</p>
+<p>调用对象apply(对象的上下文,[参数])</p>
+<p>需要在数组中arr调用数学对象Math.min /Math.max<br>Math.min.apply(arr);将数学方法应用到数组中</p>
+<p>apply()：将一个构造函数的方法在另一个构造函数中使用,达到调用this的指向</p>
+<p>方法4：借助累加器reduce</p>
+<p>在原型中自定义min()和max(),借助累加器去对比数组元素的结果<br>方法5：借助sort()函数</p>
+<p>先从大到小/小到大排序,提取第一个和最后一个<br>遍历的7种方式以及兼容性</p>
+<p>最原始for循环</p>
+<p>没有兼容性问题<br>基于forEach()循环</p>
+<p>在数组实例中用于遍历调用次数最多的函数,接受一个回调函数</p>
+<p>数组.forEach(funtion(当前元素,当前元素下标,数组本身){})</p>
+<ul>
+<li><p>当前执行的元素</p>
+</li>
+<li><p>当前元素的下标</p>
+</li>
+<li><p>数组本身</p>
+</li>
+<li><p>forEach()在ES5新增,低版本的浏览器使用的是较低版本的JS,产生兼容性问题</p>
+<ul>
+<li>在Array原型链上添加一个forEach的方法内部for循环来解决forEach的兼容性遍历的问题<br>基于map()循环</li>
+</ul>
+</li>
+</ul>
+<p>在数组实例中用于遍历调用次数最多的函数,接受一个回调函数</p>
+<p>当前执行的元素<br>当前元素的下标<br>数组本身<br>兼容性问题:通过call()得到返回值将返回值push到新数组当中</p>
+<p>filter()遍历</p>
+<p>通过判断返回值的布尔型来决定是否将返回值push()到新数组当中<br>基于find()遍历</p>
+<p>在数组实例中用于遍历调用次数最多的函数,接受一个回调函数</p>
+<p>当前执行的元素<br>当前元素的下标<br>数组本身<br>基于some()和every()函数的遍历</p>
+<p>基于reduce()遍历</p>
+<p>数组去重的7种算法</p>
+<p>遍历数组,indexOf查找重复</p>
+<p>利用对象的键值对判断</p>
+<p>排序后去重</p>
+<p>先排序,比较相邻元素是否相等<br>多重遍历数组</p>
+<p>嵌套两层循环,将相邻的元素比较如果相等,下一个元素继续比较<br>reduce去重</p>
+<p>ES6的Set数据结构</p>
+<p>Array.from(new.Set(数组))<br>利用map遍历去重</p>
+<p>查找数组中出现次数最多的元素</p>
+<p>键值对遍历<br>reduce()函数</p>
+
       
 
       
@@ -289,7 +410,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/02/%E4%B8%BA%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E5%8A%9F%E8%83%BD/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/09/12/Object%E5%AF%B9%E8%B1%A1/">展开全文 >></a>
         </p>
       
 
