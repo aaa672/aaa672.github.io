@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>VBA基础 | Eru的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、注释 &#39;注释  ##二、变量 1234&#96;创建一个字符串并赋值给单元格A1DIM str As Stringstr &#x3D; &quot;一串字符&quot;Range(&quot;A1&quot;).Value &#x3D; str">
+  <meta name="description" content="一、注释1&#96;&amp;#x27;注释&#96;   二、变量1234&#96;创建一个字符串并赋值给单元格A1DIM str As Stringstr &#x3D; &quot;一串字符&quot;Range(&quot;A1&quot;).Value &#x3D; str 12345&#96;数组Dim Arr(1 to 3) As  StringArr(1) &#x3D; &quot;Excel&quot;Arr(2) &#x3D; &quot;数&quot;Ar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VBA基础">
-<meta property="og:url" content="http://example.com/2021/12/18/VBA%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:url" content="http://example.com/2021/11/13/VBA%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="Eru的博客">
-<meta property="og:description" content="一、注释 &#39;注释  ##二、变量 1234&#96;创建一个字符串并赋值给单元格A1DIM str As Stringstr &#x3D; &quot;一串字符&quot;Range(&quot;A1&quot;).Value &#x3D; str">
+<meta property="og:description" content="一、注释1&#96;&amp;#x27;注释&#96;   二、变量1234&#96;创建一个字符串并赋值给单元格A1DIM str As Stringstr &#x3D; &quot;一串字符&quot;Range(&quot;A1&quot;).Value &#x3D; str 12345&#96;数组Dim Arr(1 to 3) As  StringArr(1) &#x3D; &quot;Excel&quot;Arr(2) &#x3D; &quot;数&quot;Ar">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-12-18T06:15:34.000Z">
-<meta property="article:modified_time" content="2021-12-18T06:31:31.310Z">
+<meta property="article:published_time" content="2021-11-13T06:15:34.000Z">
+<meta property="article:modified_time" content="2021-12-18T07:12:25.911Z">
 <meta property="article:author" content="Eru">
 <meta property="article:tag" content="blog">
 <meta name="twitter:card" content="summary">
@@ -145,18 +145,38 @@
   
 
         
-        <a href="/2021/12/18/VBA%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2021-12-18T06:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-18</time>
+        <a href="/2021/11/13/VBA%E5%9F%BA%E7%A1%80/" class="archive-article-date">
+  	<time datetime="2021-11-13T06:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、注释"><a href="#一、注释" class="headerlink" title="一、注释"></a>一、注释</h2><p> <code>&#39;注释</code></p>
+        <h2 id="一、注释"><a href="#一、注释" class="headerlink" title="一、注释"></a>一、注释</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&#x27;注释`</span><br></pre></td></tr></table></figure>
+
 <hr>
-<p>##二、变量</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`创建一个字符串并赋值给单元格A1</span><br><span class="line">DIM str As String</span><br><span class="line">str = &quot;一串字符&quot;</span><br><span class="line">Range(&quot;A1&quot;).Value = str</span><br></pre></td></tr></table></figure>
+<h2 id="二、变量"><a href="#二、变量" class="headerlink" title="二、变量"></a>二、变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`创建一个字符串并赋值给单元格A1</span><br><span class="line">DIM str As String</span><br><span class="line">str = &quot;一串字符&quot;</span><br><span class="line">Range(&quot;A1&quot;).Value = str</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`数组</span><br><span class="line">Dim Arr(1 to 3) As  String</span><br><span class="line">Arr(1) = &quot;Excel&quot;</span><br><span class="line">Arr(2) = &quot;数&quot;</span><br><span class="line">Arr(3) = &quot;组&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Excel对象"><a href="#三、Excel对象" class="headerlink" title="三、Excel对象"></a>三、Excel对象</h2><p>常用对象<br>-Application 对象，表示 Excel 应用程序。<br>-Workbook 对象，表示工作簿对象。<br>-Worksheet 对象，表示工作表对象<br>-Range 对象，表示单元格区域对象。</p>
+<h2 id="四、循环"><a href="#四、循环" class="headerlink" title="四、循环"></a>四、循环</h2><h4 id="1-for…next-循环"><a href="#1-for…next-循环" class="headerlink" title="1.for…next 循环"></a>1.for…next 循环</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Dim i As Integer</span><br><span class="line">Dim sum As Integer</span><br><span class="line"></span><br><span class="line">`循环从1到10，每次加1，共循环10次</span><br><span class="line">For i = 1 To 10 Step 1</span><br><span class="line">	sum = sum + i</span><br><span class="line">Next</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-For-Each-循环"><a href="#2-For-Each-循环" class="headerlink" title="2.For Each 循环"></a>2.For Each 循环</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">`打印所有工作表的名称</span><br><span class="line">Dim ws As WorkSheet</span><br><span class="line">For Each ws In Worksheets</span><br><span class="line">	Debug.Print ws.Name</span><br><span class="line">Next ws</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-Exit-For-语句"><a href="#3-Exit-For-语句" class="headerlink" title="3.Exit For 语句"></a>3.Exit For 语句</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Dim i As Integer</span><br><span class="line">Dim sum As Integer</span><br><span class="line"></span><br><span class="line">`从1加到10，当和大于10时停止</span><br><span class="line">For i = i = To 10</span><br><span class="line">	sum = sum + i</span><br><span class="line">	If sum &gt; 10 Then</span><br><span class="line">		Exit For</span><br><span class="line">	End If</span><br><span class="line">Next</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-Do-While-循环"><a href="#4-Do-While-循环" class="headerlink" title="4.Do While 循环"></a>4.Do While 循环</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Dim i As Integer</span><br><span class="line">Dim sum As Integer</span><br><span class="line"></span><br><span class="line">`计算1到10的和</span><br><span class="line">i = 0</span><br><span class="line">Do While i &lt;= 10</span><br><span class="line">	i += 1</span><br><span class="line">	sum = sum + i</span><br><span class="line">Loop</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-Do-…-Loop-While-循环"><a href="#5-Do-…-Loop-While-循环" class="headerlink" title="5.Do … Loop While 循环"></a>5.Do … Loop While 循环</h4><p>先循环再判断是否再执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Do</span><br><span class="line">	`循环体</span><br><span class="line">Loop While[`满足此条件循环]</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-Exit-Do-语句"><a href="#6-Exit-Do-语句" class="headerlink" title="6.Exit Do 语句"></a>6.Exit Do 语句</h4><p>与Exit For类似</p>
+<h4 id="7-Do-Until-循环"><a href="#7-Do-Until-循环" class="headerlink" title="7.Do Until 循环"></a>7.Do Until 循环</h4><h5 id="①-Do-Until-…-Loop-循环"><a href="#①-Do-Until-…-Loop-循环" class="headerlink" title="①.Do Until … Loop 循环"></a>①.Do Until … Loop 循环</h5><p>先判断是否循环再执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Do Until [`不满足此条件循环]</span><br><span class="line">    `循环体</span><br><span class="line">Loop</span><br></pre></td></tr></table></figure>
+
+<h5 id="②-Do-…-Loop-Until-循环"><a href="#②-Do-…-Loop-Until-循环" class="headerlink" title="②.Do … Loop Until 循环"></a>②.Do … Loop Until 循环</h5><p>先执行再判断是否循环</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Do</span><br><span class="line">	`循环体</span><br><span class="line">Loop Until[`不满足此条件循环]</span><br></pre></td></tr></table></figure>
       
 
       
@@ -214,7 +234,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/12/18/VBA%E5%9F%BA%E7%A1%80/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/13/VBA%E5%9F%BA%E7%A1%80/" alt="微信分享二维码">
     </div>
 </div>
 
